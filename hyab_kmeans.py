@@ -195,6 +195,19 @@ if __name__ == "__main__":
     # fig.suptitle("The effect of dithering")
     # # plt.show()
 
+    def lab_to_visual(lab):
+        return (lab + np.array([[0,120,120]])) / np.array([[100, 200, 200]])
+
+    input_lab = srgb_to_lab(np.array(img))
+    result_hyab_kmeans4_lab = srgb_to_lab(np.array(result_hyab_kmeans4))
+
+    # fig, ax = plt.subplots(1,2)
+    # ax[0].imshow(lab_to_visual(input_lab))
+    # ax[1].imshow(lab_to_visual(result_hyab_kmeans4_lab))
+
+    save(Image.fromarray(np.round(lab_to_visual(input_lab)*255).astype(np.uint8)), "input_lab")
+    save(Image.fromarray(np.round(lab_to_visual(result_hyab_kmeans4_lab)*255).astype(np.uint8)), "hyab_kmeans_lw2_med_lab")
+
     fig, ax = plt.subplots(4,2,figsize=(13,16))
     for a in ax.flatten():
         a.axis('off')
@@ -226,5 +239,3 @@ if __name__ == "__main__":
     fig.savefig("output/comparison.png")
     plt.show()
 
-
-    
